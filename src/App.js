@@ -4,16 +4,18 @@ import './App.css';
 import { TodoForm, TodoList, Footer } from './components/todo';
 import { addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos } from './lib/TodoHelpers';
 import { pipe, partial } from './lib/utils';
+import { loadTodos} from './lib/todoService';
 
 class App extends Component {
 	state = {
-			todos: [
-				{id: 1, name: 'Learn FP', isComplete: true},
-				{id: 2, name: 'Walk on the Moon', isComplete: false},
-				{id: 3, name: 'Swim in the Pacific', isComplete: false}
-				],
-				currentTodo: ''
+			todos: [],
+			currentTodo: ''
 		};
+	
+	componentDidMount() {
+		loadTodos().then(todos => this.setState({todos}));
+	}
+	
 	// Handles input change
 	handleInputChange = (e) => {
 		this.setState({

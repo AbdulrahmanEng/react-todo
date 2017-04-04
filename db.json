@@ -1,0 +1,19 @@
+{
+  "todos": [{
+    "id": 1,
+    "name": "Buy groceries",
+    "isComplete": false
+  }, {
+    "id": 2,
+    "name": "Swim in the ocean",
+    "isComplete": true
+  }, {
+    "id": 3,
+    "name": "Build VPN server",
+    "isComplete": false
+  }, {
+    "id": 4,
+    "name": "Buy ticket to the Moon",
+    "isComplete": true
+  }]
+}
