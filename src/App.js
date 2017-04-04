@@ -4,7 +4,7 @@ import './App.css';
 import { TodoForm, TodoList, Footer } from './components/todo';
 import { addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo, filterTodos } from './lib/TodoHelpers';
 import { pipe, partial } from './lib/utils';
-import { loadTodos, createTodo } from './lib/todoService';
+import { loadTodos, createTodo, saveTodo, destroyTodo } from './lib/todoService';
 
 class App extends Component {
 	state = {
@@ -35,7 +35,7 @@ class App extends Component {
 			errorMessage: ''
 		});
 		createTodo(newTodo)
-		.then(()=>console.log('Todo added'))
+		.then(() => this.showTempMessage('Todo Added'));
 	}
 	
 	// Handles empty input
@@ -48,11 +48,13 @@ class App extends Component {
 	
 	// Handles check toggles
 	handleToggle = (id) => {
-		const getUpdatedTodos = pipe(findById, toggleTodo, partial(updateTodo,this.state.todos));
-		const updatedTodos = getUpdatedTodos(id, this.state.todos);
-		this.setState({
-			todos: updatedTodos
-		});
+		const getToggledTodo = pipe(findById, toggleTodo);
+		const updated = getToggledTodo(id, this.state.todos);
+		const getUpdatedTodos = partial(updateTodo, this.state.todos);
+		const updatedTodos = getUpdatedTodos(updated);
+		this.setState({todos: updatedTodos});
+		saveTodo(updated)
+		.then(()=> this.showTempMessage('Todo Updated'));
 	}
 	
 	// Handles removal of items
@@ -62,10 +64,17 @@ class App extends Component {
 		this.setState({
 			todos: updatedTodos
 		});
+		destroyTodo(id)
+		.then(()=> this.showTempMessage('Todo Removed'));
 	}
 	
 	static contextTypes = {
 		route: React.PropTypes.string
+	}
+	
+	showTempMessage = (msg) =>{
+		this.setState({message: msg});
+		setTimeout(()=>this.setState({message:''}), 3000);
 	}
 	// Renders view
   render() {
@@ -79,6 +88,7 @@ class App extends Component {
         </div>
 				<div className="Todo-App">
 					{this.state.errorMessage && <span className="error">{this.state.errorMessage}</span>}
+					{this.state.message && <span className="success">{this.state.message}</span>}
 					<TodoForm handleInputChange={this.handleInputChange} currentTodo={this.state.currentTodo} handleSubmit={submitHandler}/>
 					<TodoList todos={displayTodos} handleToggle={this.handleToggle} handleRemove={this.handleRemove}/>
 					<Footer/>

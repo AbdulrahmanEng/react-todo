@@ -19,11 +19,6 @@
       "id": 4,
       "name": "Buy ticket to the Moon",
       "isComplete": true
-    },
-    {
-      "id": 29615,
-      "name": "new todo",
-      "isComplete": false
     }
   ]
 }
