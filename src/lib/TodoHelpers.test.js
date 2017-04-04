@@ -1,5 +1,5 @@
 // arrange, act, assert test format
-import {addTodo, findById, toggleTodo, updateTodo} from './TodoHelpers';
+import {addTodo, findById, toggleTodo, updateTodo, removeTodo} from './TodoHelpers';
 
 test('addTodo should add an item to the list', () => {
   const startTodos = [
@@ -74,7 +74,7 @@ test('updateTodo should update an item by id', () => {
     ];
   const result = updateTodo(startTodos, updatedTodo);
   expect(result).toEqual(expectedTodos)
-})
+});
 
 test('updateTodo should not mutate the original array', () => {
   const startTodos = [
@@ -87,4 +87,23 @@ test('updateTodo should not mutate the original array', () => {
   
   const result = updateTodo(startTodos, updatedTodo);
   expect(result).not.toBe(startTodos)
-})
+});
+
+test('updateTodo should update an item by id', () => {
+  const startTodos = [
+    {id: 1, name: 'one', isComplete: false},
+    {id: 2, name: 'two', isComplete: false},
+    {id: 3, name: 'three', isComplete: false}
+  ];
+    
+  const targetId = 2;
+  
+  const expectedTodos = [
+    {id: 1, name: 'one', isComplete: false},
+    {id: 3, name: 'three', isComplete: false}
+  ];
+  
+  const result = removeTodo(targetId, startTodos);
+  
+  expect(result).toEqual(expectedTodos)
+});

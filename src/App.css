@@ -32,7 +32,6 @@
 input {
 	font-size: 20px;
 }
-
 ul {
 	padding: 0px;
 }
@@ -40,6 +39,24 @@ ul {
 li {
 	list-style-type: none;
 }
+
+li span.delete-item {
+  visibility: hidden;
+  margin-left: 10px;
+  padding: 2px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+span.delete-item a {
+  text-decoration: none;
+  color: red;
+}
+
+li:hover span.delete-item {
+  visibility: visible;
+}
+
 .error {
   color: red;
 }
