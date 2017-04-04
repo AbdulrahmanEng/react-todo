@@ -12,3 +12,7 @@ export const TodoList = (props) => {
 					</div>
     );
 };
+
+TodoList.propTypes = {
+	todos: React.PropTypes.array.isRequired
+};

@@ -12,8 +12,9 @@ class App extends Component {
 				{id: 1, name: 'Learn FP', isComplete: true},
 				{id: 2, name: 'Walk on the Moon', isComplete: false},
 				{id: 3, name: 'Swim in the Pacific', isComplete: false}
-				]
-		}
+				],
+				currentTodo: ''
+		};
 		// Ensures this.setState referes to correct context
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
@@ -32,7 +33,7 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
 				<div className="Todo-App">
-					<TodoForm handleInputChange={this.handleInputChange} currentTodo={this.currentTodo}/>
+					<TodoForm handleInputChange={this.handleInputChange} currentTodo={this.state.currentTodo}/>
 					<TodoList todos={this.state.todos}/>
 				</div>
       </div>
