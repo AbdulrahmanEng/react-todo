@@ -5,10 +5,7 @@ import { TodoForm, TodoList} from './components/todo/';
 import { addTodo, generateId } from './lib/TodoHelpers';
 
 class App extends Component {
-	constructor(){
-		super();
-		// Contains app data structure
-		this.state = {
+	state = {
 			todos: [
 				{id: 1, name: 'Learn FP', isComplete: true},
 				{id: 2, name: 'Walk on the Moon', isComplete: false},
@@ -16,20 +13,15 @@ class App extends Component {
 				],
 				currentTodo: ''
 		};
-		// Ensures this.setState referes to correct context
-		this.handleInputChange = this.handleInputChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleEmptySubmit = this.handleEmptySubmit.bind(this);
-	}
 	// Handles input change
-	handleInputChange(e){
+	handleInputChange = (e) => {
 		this.setState({
 			currentTodo: e.target.value
 		});
 	}
 	
 	// Handles input submissions
-	handleSubmit (e) {
+	handleSubmit = (e) => {
 		e.preventDefault();
 		const newId = generateId();
 		const newTodo = {id: newId, name: this.state.currentTodo, isComplete: false};
@@ -42,11 +34,11 @@ class App extends Component {
 	}
 	
 	// Handles empty input
-	handleEmptySubmit(e){
+	handleEmptySubmit = (e) => {
 		e.preventDefault();
 		this.setState({
 			errorMessage: 'Todo name cannot be empty'
-		})
+		});
 	}
 	// Renders view
   render() {
@@ -55,7 +47,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>TODOs</h2>
         </div>
 				<div className="Todo-App">
 					{this.state.errorMessage && <span className="error">{this.state.errorMessage}</span>}
