@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { TodoForm, TodoList} from './components/todo/';
-import { addTodo, generateId } from './lib/TodoHelpers';
+import { addTodo, generateId, findById, toggleTodo, updateTodo } from './lib/TodoHelpers';
 
 class App extends Component {
 	state = {
@@ -40,6 +40,17 @@ class App extends Component {
 			errorMessage: 'Todo name cannot be empty'
 		});
 	}
+	
+	// Handles check toggles
+	handleToggle = (id) => {
+		const todo = findById(id, this.state.todos);
+		const toggled = toggleTodo(todo);
+		const updatedTodos = updateTodo(this.state.todos, toggled);
+		this.setState({
+			todos: updatedTodos
+		});
+	}
+	
 	// Renders view
   render() {
   	const submitHandler = this.state.currentTodo ? this.handleSubmit : this.handleEmptySubmit;
@@ -52,7 +63,7 @@ class App extends Component {
 				<div className="Todo-App">
 					{this.state.errorMessage && <span className="error">{this.state.errorMessage}</span>}
 					<TodoForm handleInputChange={this.handleInputChange} currentTodo={this.state.currentTodo} handleSubmit={submitHandler}/>
-					<TodoList todos={this.state.todos}/>
+					<TodoList todos={this.state.todos} handleToggle={this.handleToggle}/>
 				</div>
       </div>
     );
