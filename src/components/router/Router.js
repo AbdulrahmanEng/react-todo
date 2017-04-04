@@ -14,6 +14,7 @@ export class Router extends Component {
     this.setState({route});
     history.pushState(null, '', route)
   }
+  
   // Exposes types to child components
   static childContextTypes = {
     route: React.PropTypes.string,
@@ -26,6 +27,13 @@ export class Router extends Component {
       linkHandler: this.handleLinkClick
     };
   }
+  
+  componentDidMount() {
+    window.onpopstate = () => {
+      this.setState({route: getCurrentPath()})
+    }
+  }
+  
   render(){
     return (<div>{this.props.children}</div>);
   }
